@@ -72,7 +72,7 @@ What cipher would you like to use?\n
 
 Zuletzt wird bei beiden betroffenen Benutzer:innen der Kontakt hinzugefügt. Dies funktioniert mit Hilfe der Methode `addContact` der `User`-Klasse. Der Key wird mithilfe der Funktion `Utils::deriveKey` berechnet. 
 
-Da sich nun die Konfiguration geändert hat wird noch die bool-Variable `modified_` in `Config` auf `true` gesetzt, sodass beim Schließen des Programms die Konfiguration neu in die Datei geschrieben wird. 
+Da sich nun die Konfiguration geändert hat, wird noch die bool-Variable `modified_` in `Config` auf `true` gesetzt, sodass beim Schließen des Programms die Konfiguration neu in die Datei geschrieben wird. 
 
 
 
@@ -123,7 +123,7 @@ Nach der Ausgabe der Eingabeaufforderung
 Enter your message now:\n
 ```
 
-folgt die Eingabe der zu verschlüsselnden Nachricht. Diese Nachricht wird zusammen Informationen über Empfänger:in und Absender:in an die (zu implementierende) `sendMessage`-Methode des `active_user` übergeben, welche das Senden durchführt.
+folgt die Eingabe der zu verschlüsselnden Nachricht. Diese Nachricht wird zusammen mit Informationen über Empfänger:in und Absender:in an die (zu implementierende) `sendMessage`-Methode des `active_user` übergeben, welche das Senden durchführt.
 
 
 ### encryption-Beispiel

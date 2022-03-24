@@ -32,7 +32,7 @@ Die Klasse `User` bildet eine:n Benutzer:in im Programm ab. In der [Konfiguratio
   - setzt das Attribut `contacts_` auf `Utils::sortContactsAlphabetically` *(Tipp: Initialisierungsliste verwenden!)*
     - mit dieser Funktion sortiert die Map ihre Keys
 - Der Copy-Konstruktor soll gelöscht werden.
-- Es soll ein geeigneter Destruktor implementiert werden, der falls nötig allokierten Speicher wieder freigibt.
+- Es soll ein geeigneter Destruktor implementiert werden, der, falls nötig, allokierten Speicher wieder freigibt.
 
 ### Methoden
 

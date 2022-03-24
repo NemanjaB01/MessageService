@@ -9,7 +9,7 @@ In der Konfigurationsdatei sind folgende Informationen über jede:n Benutzer:in 
 - Liste der Kontakte, wobei jeder Listeneintrag (Kontakt) aus folgenden Elementen besteht:
   - Benutzername des Kontakts,
   - Art des Verschlüsselungsalgorithmus, um mit diesem Kontakt kommunzieren zu können sowie
-  - Key für die Verschlüsselung
+  - Key für die Verschlüsselung.
 
 Benutzernamen und Passwörter dürfen nur aus Großbuchstaben, Kleinbuchstaben und Zahlen bestehen und müssen mindestens ein Zeichen lang sein.
 
@@ -109,7 +109,7 @@ Im Sinne der objektorientierten Programmierung soll für die Konfiguration eine 
   - sucht in `users_` nach einem Benutzer mit dem Namen `name`
   - Rückgabewert: 
     - wenn der Benutzer gefunden wurde, wird ein Pointer auf den entsprechenden `User` zurückgegeben. 
-    - ansonsten wird `nullptr` zurückgegeben (`nullptr` ist das C++ Equivalent zu `NULL`)
+    - ansonsten wird `nullptr` zurückgegeben (`nullptr` ist das C++ Äquivalent zu `NULL`)
 - `User* registerUser(const std::string& name, const std::string& password)`
   - fügt eine:n neue:n Benutzer:in mit dem Namen `name` und dem Passwort `passwort` am Ende des Vectors `users_` hinzu
   - in diesem Fall ändert sich die Konfiguration und es soll `modified_` auf `true` gesetzt werden
@@ -131,13 +131,13 @@ Im Sinne der objektorientierten Programmierung soll für die Konfiguration eine 
 
 ### Was ist nun genau die Aufgabe dieser Klasse?
 
-Es wäre nicht sehr effizient und eher umständlich, wenn für jede der oben geannten Methoden tatsächlich auf die Konfigurationsdatei zugegriffen werden muss. Beispielweise müsste dann jedesmal bei der Passwortüberprüfung von einem Benutzer, der entsprechende Eintrag erst in der Datei gefunden und ausgelesen werden.
+Es wäre nicht sehr effizient und eher umständlich, wenn für jede der oben geannten Methoden tatsächlich auf die Konfigurationsdatei zugegriffen werden muss. Beispielweise müsste dann jedesmal bei der Passwortüberprüfung von einer:m Benutzer:in, der entsprechende Eintrag erst in der Datei gefunden und ausgelesen werden.
 
-Um dieses Problem zu umgehen, soll die Konfigurationsdatei in der Methode `parseFile` vollständig ausgelesen werden. Dabei wird einerseits überprüft, ob die Konfigurationsdatei gültig ist. Andererseits soll an dieser Stelle der gesamte Inhalt in die interne Datenstruktur `users_` gespeichert werden. `users_` ist ein Vector bzw. eine Liste aus Pointer auf Benutzer:innen (siehe Klasse `User`). Da jede Zeile aus der Konfigurationdatei für genau einen Benutzer bestehend aus Benutzername, Passwort, Kontakte steht, ist es sinnvoll für jede Zeile ein `User`-Objekt am Heap anzulegen und den Pointer in `users_` abzuspeichern. Weiters besitzt ein Objekt der Klasse `User` Attribute für Namen, Passwort, Kontakte, womit letzendlich der gesamte Eintrag aus der Konfigurationsdatei in einem solchen Objekt abgespeichert werden kann.
+Um dieses Problem zu umgehen, soll die Konfigurationsdatei in der Methode `parseFile` vollständig ausgelesen werden. Dabei wird einerseits überprüft, ob die Konfigurationsdatei gültig ist. Andererseits soll an dieser Stelle der gesamte Inhalt in die interne Datenstruktur `users_` gespeichert werden. `users_` ist ein Vector bzw. eine Liste aus Pointer auf Benutzer:innen (siehe Klasse `User`). Da jede Zeile aus der Konfigurationdatei für genau eine:n Benutzer:in bestehend aus Benutzername, Passwort, Kontakte steht, ist es sinnvoll für jede Zeile ein `User`-Objekt am Heap anzulegen und den Pointer in `users_` abzuspeichern. Weiters besitzt ein Objekt der Klasse `User` Attribute für Namen, Passwort, Kontakte, womit letzendlich der gesamte Eintrag aus der Konfigurationsdatei in einem solchen Objekt abgespeichert werden kann.
 
 Damit ist es ausreichend, ab jetzt nur mehr auf `users_` zuzugreifen, da dort alle Informationen aus der Konfigurationsdatei abgespeichert sind. Die Datei selbst braucht ab diesem Moment nicht mehr ausgelesen werden und kann nach dem Einlesen geschlossen werden.
 
-Im Falle, dass sich ein neuer Benutzer registriert, oder ein Benutzer einen Kontakt hinzufügt, ändert sich die Konfiguration. Dies soll durch das Setzen vom Attribut `modified_` signalisiert werden. In dieser Situation wird die Änderung aber nur intern in der Benutzerliste `users_` übernommen. Einerseits dadurch, dass ein weiteres Element (Ein `User` am Heap) am Ende eingefügt wird, andererseits dadurch, dass von einem bestehenden Benutzer die Kontaktliste erweitert wird. 
+Im Falle, dass sich ein:e neue:r Benutzer:in registriert, oder ein:e Benutzer:in einen Kontakt hinzufügt, ändert sich die Konfiguration. Dies soll durch das Setzen vom Attribut `modified_` signalisiert werden. In dieser Situation wird die Änderung aber nur intern in der Benutzerliste `users_` übernommen. Einerseits dadurch, dass ein weiteres Element (Ein `User` am Heap) am Ende eingefügt wird, andererseits dadurch, dass von einer:m bestehenden Benutzer:in die Kontaktliste erweitert wird. 
 
 Erst wenn das Programm beendet wird (und `modified_` auf `true` gesetzt ist), muss die Änderung tatsächlich in die Konfigurationsdatei übernommen werden. Dies soll in der Methode `updateConfigFile` implementiert werden. Ein möglicher Ansatz ist es, die bestehende Konfigurationsdatei gänzlich mit der Benutzerliste zu überschreiben. Es ist dabei zu beachten, dass alle Kontaktlisten alphabetisch sortiert gespeichert werden. Falls die hier vorgesehen Implementierung umgesetzt wird, erfolgt dies automatisch und muss nicht weiter beachtet werden. Sollte es nicht möglich sein, die Konfigurationsdatei (erneut) zu öffnen, soll die Methode `false` zurückgeben.
 
