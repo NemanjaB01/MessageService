@@ -1,92 +1,198 @@
-# Upstream A1
+# Assignment 1 - Messaging-Dienst
+
+In Assignment 1 (A1) der Konstruktionsübung (KU) soll ein Programm geschrieben werden, mit dem Nachrichten – ähnlich wie bei einem Messaging-Dienst – in verschlüsselter Form zwischen Benutzer:innen ausgetauscht werden können. Als Verschlüsselungsalgorithmen sollen zwei einfache klassische Verfahren (wie beipielsweise eine Version des Caesar-Ciphers) implementiert werden.
+
+---
+
+## Lernziele
+
+- Grundlegendes über Klassen
+  - Attribute, Methoden
+  - Konstruktor, Copy-Konstruktor, Destruktor
+- Vererbung
+  - virtuelle Methoden
+  - abstrakte Klassen
+- Strings & Streams (werden am 31.3. in der VO vorgestellt)
+  - `std::string`
+  - Files
+- Datenstrukturen aus der Standard Template Library
+  - bspw. `std::vector` oder `std::map`
+
+---
+
+## Spezifikation
+
+- offizielle Ausgabe: 24.3.2022 nach dem VO-Stream
+- Abzugeben bis (Soft-Deadline): 19.4.2022 um 23:59 (in Österreich gültige Zeit)
+- Nachfrist für eine Ausbesserung bis (Hard-Deadline): 23.4.2022 um 23:59 (in Österreich gültige Zeit)
+- Das Framework bestehend aus `main.cpp`, `IO.hpp`, `IO.cpp` sowie `Utils.hpp` und `Utils.cpp` dürfen **NICHT** verändert werden.
+- Es dürfen nur C++ Standard Libraries verwendet werden
+- A1 ist **keine** Gruppenarbeit. Jede:r Student:in erhält vom Lehrveranstaltungs-Team ein eigenes Gitlab-Repository und das Assignment ist **eigenständig** zu
+  bearbeiten. Bitte lies dir dazu unsere [Richtlinien zu Plagiaten](https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiate) genau durch!
+- Die Abgabe muss auf einen eigenen Git-Branch mit dem Namen `submission` erfolgen. Das heißt vor Ablauf der Nachfrist
+  muss die eigene Lösung mittels `git push` in den `submission`-Branch des eigenen Gitlab-Repositorys für A1 gesendet worden sein.
+
+---
+
+## Bewertung
+
+**Achtung: Für eine positive Beurteilung in der KU muss mindestens die Hälfte der öffentlichen Testcases bestanden werden.** 
+
+Das Assignment wird, wie im [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=138898) beschrieben, bewertet, allerdings mit zwei Ausnahmen:
+
+1. Beim A1 wird **nur die Funktionalität bewertet**, nicht aber der Coding Standard.
+2. Zum A1 wird es **keine Abgabegespräche** geben.
+
+Auch das Beurteilungsschema der Konstruktionsübung findet sich im [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=256924), insbesondere sei hier noch einmal auf die Regeln zu [Plagiaten](https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiate) verwiesen.
+
+---
+
+## Beschreibung
+
+### Überblick
+
+In A1 ist ein Programm zu implementieren, in dem Nachrichten – ähnlich wie bei einem Messaging-Dienst – in verschlüsselter Form zwischen Benutzer:innen ausgetauscht werden.
+
+Grundlage des Programms bildet eine Konfigurationsdatei, in der definiert ist, wer für diesen Messaging-Dienst registiert ist und diesen damit auch verwenden kann. Weiters wird in dieser Konfigurationsdatei festgehalten, mit welchen anderen Personen (Kontakten) ein:e Benutzer:in Nachrichten austauschen kann.
+
+Damit nun ein:e Benutzer:in den Messaging-Dienst verwenden kann, muss sich diese:r zu Beginn des Programms einloggen. Falls dies erfolgreich war, ist es für die:den Benutzer:in möglich, Nachrichten an die eigenen Kontakte zu schicken bzw. auch bereits erhaltene Nachrichten zu lesen.
+
+Wichtig ist hierbei, dass alle versendeten Nachrichten verschlüsselt in Textdateien abgespeichert werden, sodass es für andere Benutzer:innen nicht möglich ist, den Inhalt der Nachrichten einfach aus den Textdateien auszulesen. Im Umkehrschluss bedeutet das aber auch, dass erhaltene Nachrichten zuerst entschlüsselt werden müssen, damit diese gelesen werden können.
+
+Anmerkung: Üblicherweise würde man Nachrichten zu einem Server schicken bzw. von diesem empfangen. Um dies in A1 zu vereinfachen, werden abgesendete Nachrichten lediglich in Textdateien abgespeichert.
+
+---
+
+### Klassen
+
+#### Cipher
+
+Um die Nachrichten verschlüsselt versenden zu können, benötigen wir einen Verschlüsselungsalgorithmus. In diesem Assignment werden Verschlüsselungsalgorithmen durch Klassen repräsentiert. Als Basisklasse für alle Verschlüsselungsalgorithmen soll eine Klasse namens `Cipher` dienen. In den von ihr abgeleiteten Klassen sollen die jeweiligen Verschlüsselungsalgorithmen implementiert werden. Eine detaillierte Beschreibung der Klassen ist unter [description/Cipher.md](description/Cipher.md) zu finden.
+
+**Tipp:** Da mehrere konkrete Verschlüsselungsalgorithmen zu implementieren sind, raten wir, zunächst nur den einfachsten zu implementieren (None-Cipher) und sich dann um die in der Folge beschriebenen Klassen `User` und `Config` zu kümmern. Alle Verschlüsselungsalgorithmen können auch mithilfe der [Testoption](#Test) beim Programmstart einfach überprüft werden. 
+
+#### User & Messages
+
+Benutzer:innen des Messaging-Dienstes können verschlüsselte Nachrichten senden und empfangen und werden in diesem Programm durch die zu schreibende Klasse `User` repräsentiert. Eine detaillierte Beschreibung dieser Klasse ist unter [description/User_Messages.md](description/User_Messages.md) zu finden.
+
+#### Config
+
+Sind die oben genannten Klassen implementiert, kann mit dem Einlesen der Konfigurationsdatei begonnen werden. Eine detaillierte Beschreibung über den Aufbau der Konfigurationsdatei ist unter [description/Config.md](description/Config.md) zu finden. In dieser Datei wird auch beschrieben, wie die entsprechende Klasse namens `Config` aussehen soll.
 
 
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Programmstart
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+**ACHTUNG: Die Datei `main.cpp` darf NICHT veändert werden!**
 
-## Add your files
+In der Datei `main.cpp` ist der Programmstart bereits gegeben. Das Programm erhält beim Aufruf den Pfad zur Konfigurationsdatei als Parameter. Danach wird ein Objekt der Klasse `Config` (zu implementieren) erstellt, das File überprüft und versucht, die Konfigurationsdatei zu parsen (einlesen der Benutzer:innen und ihrer Kontakte).
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+War das Einlesen der Konfigurationsdatei erfolgreich, kann die:der Benutzer:in zwischen den  Optionen _Registrierung_, _Login_ und _Test_  wählen.
+
+### Registrierung
+
+> bereits implementiert in main.cpp
+
+Wird bei der ersten Eingabe die Registrierung gewählt, dann wird die Funktion `userRegistration` aufgerufen und es müssen Benutzername und Passwort eingeben werden. Beim Benutzernamen wird überprüft, ob die:der Benutzer:in bereits in der Konfigurationsdatei vorhanden ist. Wenn nicht, dann soll die:der Benutzer:in mit dem Funktionsaufruf `config.registerUser(username, password)` registriert werden. Diese Funktion ist u. a. in der `Config`-Klasse zu implementieren.
+
+Der Rückgabewert der Funktion `userRegistration` in der Datei `main.cpp` soll ein Pointer auf das `User`-Objekt sein, das die:den neu registrierte:n Benutzer:in repräsentiert.
+
+#### Beispiel
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.tugraz.at/esp_oop1_isds/oop1_ss2022/upstream-a1.git
-git branch -M main
-git push -uf origin main
+Welcome to the OOP1 Messaging Service!
+Would you like to [r]egister or [l]ogin?
+  > r
+Please enter user name!
+  > Max
+Please enter your password!
+  > easypassword
+
+
+Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
+  > 
 ```
 
-## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.tugraz.at/esp_oop1_isds/oop1_ss2022/upstream-a1/-/settings/integrations)
 
-## Collaborate with your team
+### Login
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+> bereits implementiert in main.cpp
 
-## Test and Deploy
+Wird bei der ersten Eingabe der Login gewählt, dann wird die Funktion `userLogin` aufgerufen und es muss zunächst der Benutzername eingeben werden. Es wird in der Konfigurationsdatei überprüft, ob dieser Name vorhanden ist. Wenn dies der Fall ist, hat die:der Benutzer:in drei Mal die Möglichkeit, das richtige Passwort einzugeben. Hierfür wird die Funktion `config.loginUser(username, password)` aufgerufen, welche zu implementieren ist. Diese gibt einen Pointer auf das entsprechende `User`-Objekt zurück, wenn der Login erfolgreich war und `nullptr`, wenn das Passwort nicht mit jenem in der Konfigurationsdatei übereinstimmt. (`nullptr` ist das C++ Equivalent zu `NULL`)
 
-Use the built-in continuous integration in GitLab.
+Der Rückgabewert der Funktion `userLogin` in der Datei `main.cpp` soll der neu angelegte und eingeloggte User sein oder `nullptr` wenn der Login nicht erfolgreich war.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```
+Welcome to the OOP1 Messaging Service!
+Would you like to [r]egister or [l]ogin?
+  > l
+Please enter user name!
+  > David
+Please enter your password!
+  > easypassword
 
-***
 
-# Editing this README
+Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
+  > 
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-## Name
-Choose a self-explaining name for your project.
+### Test
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+> bereits implementiert in main.cpp
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Wird bei der ersten Eingabe _Test_ ausgewählt erfolgt kein Zugang zum Messaging Dienst. Diese Option dient lediglich dazu die zu implementierenden Verschlüsselungsalgorithmen ohne die notwendigkeit anderer Klassen testen zu können. 
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+#### Beispiel
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```
+Welcome to the OOP1 Messaging Service!
+Would you like to [r]egister, [l]ogin or [t]est?
+  > t
+What cipher would you like to use?
+  > caesar
+Enter your message now:
+  > hello world
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Sending ...
+INCKVLLWMM
+Reading ...
+Recipient: SYSTEM
+Sender: SYSTEM
+HELLOWORLD
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Menü
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+> bereits implementiert in main.cpp
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+War die Registrierung oder der Login erfolgreich, kommt die:der Benutzer:in ins Hauptmenü. Auch dieses ist bereits fertig implementiert. Eine detaillierte Beschreibung des Menüs ist unter [description/Menu.md](description/Menu.md) zu finden.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Programmende
+
+Dieser Teil ist bereits implementiert. Es ist jedoch noch zu implementieren, wann eine Konfigurationsdatei ungültig ist. 
+
+| Rückgabewert | Beschreibung                                                 |
+| ------------ | ------------------------------------------------------------ |
+| 0            | Normales Programmende                                        |
+| 1            | Speicher konnte nicht alloziert werden. Fehlermeldung: `Error: not enough memory!\n` |
+| 2            | Falsche Anzahl an Programmargumenten. Fehlermeldung: `Usage: ./a1 <configfile>\n` |
+| 3            | Konfigurationsdatei konnte nicht geöffnet werden. Fehlermeldung: `Error: could not open config file!\n` |
+| 4            | Ungültige Konfigurationsdatei. Fehlermeldung: `Error: invalid config file!\n` |
+| 5            | Login nicht erfolgreich nach 3 fehlgeschlagenen Versuchen    |
+
+
+
+
+
+## Hinweis
+
+> Ein wichtiger Hinweis noch am Ende: Sämtliche kryptographische Verfahren, die in diesem Beispiel eingesetzt werden, sind keinesfalls sicher und sollten unter keinen Umständen in sicherheitskritischen Anwendungen verwendet werden. Bedingt durch die Konfigurationsdatei sind weiters sämtliche Schlüssel öffentlich einsehbar. Daher können auch alle mit Zugriff auf die Konfigurationsdatei jeden Schlüssel einsehen und damit jede Nachricht entschlüsseln. Bei Interesse über zeitgemäße kryptographische Verfahren, die aber wesentlich komplexer sind als die hier eingesetzten, dürfen wir auf die Lehrveranstaltung "Information Security" verweisen.
