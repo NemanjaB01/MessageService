@@ -81,8 +81,6 @@ int main(int argc, char* argv[])
         return ErrorValue::MAX_PASSWORD_RETRIES;
     }
 
-    // todo parse contacts
-
     menu(config, active_user);
   }
   catch (std::bad_alloc& e)  // in c++ an exception is thrown if no more memory on heap
