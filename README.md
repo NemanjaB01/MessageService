@@ -103,7 +103,7 @@ Der Rückgabewert der Funktion `userRegistration` in der Datei `main.cpp` soll e
 
 ```
 Welcome to the OOP1 Messaging Service!
-Would you like to [r]egister or [l]ogin?
+Would you like to [r]egister, [l]ogin or [t]est?
   > r
 Please enter user name!
   > Max
@@ -121,13 +121,13 @@ Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
 
 > bereits implementiert in main.cpp
 
-Wird bei der ersten Eingabe der Login gewählt, dann wird die Funktion `userLogin` aufgerufen und es muss zunächst der Benutzername eingeben werden. Es wird in der Konfigurationsdatei überprüft, ob dieser Name vorhanden ist. Wenn dies der Fall ist, hat die:der Benutzer:in drei Mal die Möglichkeit, das richtige Passwort einzugeben. Hierfür wird die Funktion `config.loginUser(username, password)` aufgerufen, welche zu implementieren ist. Diese gibt einen Pointer auf das entsprechende `User`-Objekt zurück, wenn der Login erfolgreich war und `nullptr`, wenn das Passwort nicht mit jenem in der Konfigurationsdatei übereinstimmt. (`nullptr` ist das C++ Äquivalent zu `NULL`)
+Wird bei der ersten Eingabe der Login gewählt, dann wird die Funktion `userLogin` aufgerufen und es muss zunächst der Benutzername eingeben werden. Es wird in der Konfigurationsdatei überprüft, ob dieser Name vorhanden ist. Wenn dies der Fall ist, hat die:der Benutzer:in drei Mal die Möglichkeit, das richtige Passwort einzugeben. Hierfür wird die Funktion `config.loginUser(username, password)` aufgerufen, welche zu implementieren ist. Diese gibt einen Pointer auf das entsprechende `User`-Objekt zurück, wenn der Login erfolgreich war und `nullptr`, wenn das Passwort nicht mit jenem in der Konfigurationsdatei übereinstimmt. (`nullptr` ist das C++ Äquivalent zu `NULL`.)
 
 Der Rückgabewert der Funktion `userLogin` in der Datei `main.cpp` soll der neu angelegte und eingeloggte User sein oder `nullptr` wenn der Login nicht erfolgreich war.
 
 ```
 Welcome to the OOP1 Messaging Service!
-Would you like to [r]egister or [l]ogin?
+Would you like to [r]egister, [l]ogin or [t]est?
   > l
 Please enter user name!
   > David
@@ -145,7 +145,7 @@ Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
 
 > bereits implementiert in main.cpp
 
-Wird bei der ersten Eingabe Test ausgewählt erfolgt kein Zugang zum Messaging Dienst. Diese Option dient lediglich dazu die zu implementierenden Verschlüsselungsalgorithmen ohne die notwendigkeit anderer Klassen testen zu können. 
+Wird bei der ersten Eingabe Test ausgewählt, erfolgt kein Zugang zum Messaging Dienst. Diese Option dient lediglich dazu, die zu implementierenden Verschlüsselungsalgorithmen ohne die Notwendigkeit anderer Klassen testen zu können. 
 
 #### Beispiel
 
@@ -187,7 +187,7 @@ Dieser Teil ist bereits implementiert. Es ist jedoch noch zu implementieren, wan
 | 2            | Falsche Anzahl an Programmargumenten. Fehlermeldung: `Usage: ./a1 <configfile>\n` |
 | 3            | Konfigurationsdatei konnte nicht geöffnet werden. Fehlermeldung: `Error: could not open config file!\n` |
 | 4            | Ungültige Konfigurationsdatei. Fehlermeldung: `Error: invalid config file!\n` |
-| 5            | Login nicht erfolgreich nach 3 fehlgeschlagenen Versuchen    |
+| 5            | Login nicht erfolgreich nach drei fehlgeschlagenen Versuchen    |
 
 
 

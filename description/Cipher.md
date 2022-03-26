@@ -2,7 +2,7 @@
 
 Verschlüsselungsalgorithmen können verwendet werden, um geheime Nachrichten über einen öffentlichen Kanal zu versenden. Es gibt mehrere Arten von Verschlüsselungsverfahren, welche im Laufe des Studiums noch genauer beleuchtet werden. Wir werden in diesem Beispiel einfache symmetrische Verschlüsselungsalgorithmen verwenden, um Nachrichten zwischen Benutzer:innen austauschen zu können. Für symmetrische Verschlüsselungsalgorithmen ist ein Schlüssel (_Key_) notwendig. Abhängig vom diesem Key werden die einzelnen Zeichen verschlüsselt. Eine Einführung in Verschlüsselungen gibt beispielsweise dieses kurze [Youtube Video](https://www.youtube.com/watch?v=DcX77qgbBZw).
 
-In diesem Assignment sind zwei Verschlüsselungsalgorithmen zu implementieren, welche nachfolgend genauer beschrieben werden. Hierfür ist eine Basisklasse für Verschlüsselungen zu implementieren, von welcher je eine Klasse für die beiden Verschlüsselungsalgorithmen abgeleitet werden sollen.
+In diesem Assignment sind zwei Verschlüsselungsalgorithmen zu implementieren, welche nachfolgend genauer beschrieben werden. Hierfür ist eine Basisklasse für Verschlüsselungen zu implementieren, von welcher eine Klasse pro konkretem Verschlüsselungsalgorithmus abgeleitet werden soll.
 
 ---
 
@@ -35,7 +35,7 @@ Für alle Attribute und Methoden soll selbständig entschieden werden, ob diese 
 ### Attribute
 
 - `key_`
-  - Jeder Verschlüsselungsalgorithmus hat einen Schlüssel (_Key_), mit welchem die Zeichen einer Nachricht verschlüsselt werden
+  - Jeder Verschlüsselungsalgorithmus hat einen Schlüssel (_Key_), mit welchem die Zeichen einer Nachricht verschlüsselt werden.
   - Der Zugriff auf dieses Attribut soll von abgeleiteten Klassen aus möglich sein.
   - Datentyp: `Key`
 
@@ -53,7 +53,7 @@ Für alle Attribute und Methoden soll selbständig entschieden werden, ob diese 
 - `std::string getCipherTypeString() const`
   - eine *rein virtuelle* Methode (pure virtual function)
   - gibt den jeweiligen Verschlüsselungsalgorithmus als `std::string` zurück
-- `std::string preparePlainText(const std::string& plain_text)`
+- `std::string preparePlainText(const std::string& plain_text) const`
   - wandelt alle Buchstaben in Großbuchstaben um und löscht alle Leerzeichen aus dem Klartext
   - Rückgabe: der aufbereitete Klartext
 - `std::string encrypt(const std::string& plain_text)`
@@ -64,6 +64,11 @@ Für alle Attribute und Methoden soll selbständig entschieden werden, ob diese 
   - eine *rein virtuelle* Methode (pure virtual function)
   - enschlüsselt den `cipher_text` mit dem jeweiligen Verschlüsselungsalgorithmus
   - Rückgabe: der Klartext
+- `static CipherType getCipherType(const std::string& type)`
+  - gibt `CipherType::NONE_CIPHER` zurück, falls `type` aus den Großbuchstaben NONE besteht
+  - gibt `CipherType::ASCII_CIPHER` zurück, falls `type` aus den Großbuchstaben ASCII besteht
+  - gibt `CipherType::CAESAR_CIPHER` zurück, falls `type` aus den Großbuchstaben CAESAR besteht
+  - Trifft keiner der drei obigen Fälle ein, soll `CipherType::INVALID` zurückgegeben werden.
 
 > Hinweis: Weitere Attribute und Methoden können zu allen Klassen jederzeit hinzugefügt werden. Dies wird in einigen Fällen hilfreich und notwendig sein.
 
@@ -149,7 +154,7 @@ Klartext: "OOP"
 
 > AsciiCipher.cpp und AsciiCipher.hpp
 
-Die Klasse `AsciiCipher` stellt den AsciiCipher als konkreten Verschlüsselungsalgorithmen dar und ist von der Basisklasse `Cipher` abgeleitet.
+Die Klasse `AsciiCipher` stellt den ASCII-Cipher als konkreten Verschlüsselungsalgorithmen dar und ist von der Basisklasse `Cipher` abgeleitet.
 
 ### Konstruktoren
 
@@ -231,7 +236,7 @@ Die Klasse `CaesarCipher` stellt den CaesarCipher als konkreten Verschlüsselung
 
 ### Methoden
 
-- `std::string getCipherTypeString()`
+- `std::string getCipherTypeString() const override`
   - Implementierung der rein virtuellen Methode aus der Basisklasse `Cipher`
   - gibt "CAESAR" zurück
 - `std::string encrypt(const std::string& plain_text) override`
