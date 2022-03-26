@@ -13,16 +13,16 @@ Die Klasse `User` bildet eine:n Benutzer:in im Programm ab. In der [Konfiguratio
 ### Attribute
 
 - `name_`
-  - der Name der Person als std::string
+  - der Name der Person als `std::string`
 - `password_`
   - das Passwort der Person als `std::string`
 - `contacts_`
   - eine `std::map` mit einem `User*` als Key und einem `Cipher*` als Value und einer Sortierungsfunktion `bool (*)(User*, User*)`: `std::map<User*, Cipher*, bool(*)(User*, User*)> contacts_;`
-  - ein:e Benutzer:in kann eine beliebige Anzahl an Kontakten besitzen, welche in dieser Map abgespeichert werden sollen
+  - Ein:e Benutzer:in kann eine beliebige Anzahl an Kontakten besitzen, welche in dieser Map abgespeichert werden sollen.
   - Jeder _Key_ der Map ist ein Pointer auf eine:n andere:n Benutzer:in, also auf einen Kontakt.
     - Achtung! Der Key einer Map hat nichts mit dem Key eines Verschlüsselungsalgorithmus zu tun.
-  - Jeder _Value_ der Map ist ein Pointer auf den zu verwendenten `Cipher`. Dieser ist notwendig, um mit dem Kontakt verschlüsselt kommunizieren zu können.
-  - Die Sortierungsfunktion dient dazu, dass die Kontaktliste alphabetisch sortiert ist. Es ist nicht notwendig genau zu verstehen was die Sortierungsfunktion `bool(*)(User*, User*)` macht. 
+  - Jeder _Value_ der Map ist ein Pointer auf den zu verwendenden `Cipher`. Dieser ist notwendig, um mit dem Kontakt verschlüsselt kommunizieren zu können.
+  - Die Sortierungsfunktion dient dazu, dass die Kontaktliste alphabetisch sortiert ist. Es ist nicht notwendig, genau zu verstehen, was die Sortierungsfunktion `bool(*)(User*, User*)` macht. 
 
 ### Konstruktoren
 
@@ -43,19 +43,19 @@ Die Klasse `User` bildet eine:n Benutzer:in im Programm ab. In der [Konfiguratio
 - `const auto& getContacts() const`
   - Getter für `contacts_`
   - zur Übersichtlichkeit kann einfach `auto&` anstatt des tatsächlichen Datentyps verwendet werden
-- `bool verifyPassword(const std::string& password)`
-  - überprüft ob das eingebenen Passwort (Parameter) mit dem gespeicherten Passwort übereinstimmt
+- `bool verifyPassword(const std::string& password) const`
+  - überprüft, ob das eingebenen Passwort (Parameter) mit dem gespeicherten Passwort übereinstimmt
   - gibt genau dann `true` zurück, wenn die Paswörter übereinstimmen
-- `bool hasContact(const std::string& name)`
+- `bool hasContact(const std::string& name) const`
   - überprüft, ob es eine:n Benutzer:in (Kontakt) mit dem Namen `name` in `contact_` gibt
   - gibt genau dann `true` zurück, wenn ein:e solche:r Benutzer:in vorhanden ist
 - `void addContact(User* contact, CipherType type, Key key)`
   - erstellt einen neuen Kontakt in `contacts_`
   - Der User-Pointer `contact` soll als _Key_ in der Map `contacts_` eingefügt werden.
   - Abhängig von `type` wird ein Objekt der jeweiligen abgeleiteten Klasse von `Cipher` mit dem `key` erstellt. Ein Pointer auf dieses Objekt wird in der Map `contacts_` als _Value_ (zum _Key_ `contact`) hinzugefügt.
-- `bool sendMessage(const std::string& recipient, const std::string& filename, const std::string& plain_text)`
+- `bool sendMessage(const std::string& recipient, const std::string& filename, const std::string& plain_text) const`
   - siehe Erklärung weiter unten
-- `bool readMessage(const std::string& filename)`
+- `bool readMessage(const std::string& filename) const`
   - siehe Erklärung weiter unten
 
 > Hinweis: Weitere Attribute und Methoden können zu allen Klassen jederzeit hinzugefügt werden. Dies wird in einigen Fällen hilfreich und notwendig sein.
@@ -83,7 +83,7 @@ Sender: <username of sender>\n
 
 ### Beispiel
 
-Folgende Nachricht wurde mit dem Ascii-Cipher verschlüsselt:
+Folgende Nachricht wurde mit dem ASCII-Cipher verschlüsselt:
 ```
 Recipient: Michi\n
 Sender: David\n
@@ -99,7 +99,7 @@ ZLUASFE\n
 
 ### Beschreibung von `User::sendMessage`
 
-`bool sendMessage(const std::string& recipient, const std::string& filename, const std::string& plain_text)`
+`bool sendMessage(const std::string& recipient, const std::string& filename, const std::string& plain_text) const`
 
 Zu Beginn soll die durch den Parameter `filename` angebene Datei geöffnet werden. Falls dies nicht erfolgreich war, soll `false` zurückgegeben werden.
 
@@ -109,7 +109,7 @@ Wenn die Datei geöffnet werden konnte und die:der Benutzer:in an einen eigenen 
 
 ### Beschreibung von `User::readMessage`
 
-`bool readMessage(const std::string& filename)`
+`bool readMessage(const std::string& filename) const`
 
 Zu Beginn soll die durch den Parameter `filename` angebene Datei geöffnet werden. Falls dies nicht erfolgreich war, soll `false` zurückgegeben werden.
 
