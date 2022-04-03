@@ -9,7 +9,7 @@ SOURCES       := $(wildcard *.cpp)
 OBJECTS       := $(patsubst %,$(BUILDDIR)/%,${SOURCES:.cpp=.o})
 
 .DEFAULT_GOAL := bin
-.PHONY: reset clean bin lib all run test help
+.PHONY: reset clean bin lib all run test help prepare
 
 prepare:
 	mkdir -p $(BUILDDIR)
