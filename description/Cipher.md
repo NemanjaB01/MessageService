@@ -195,7 +195,7 @@ Um einen Klartext verschlüsseln zu können, muss dieser zuerst mit `preparePlai
 
 Bei der [Caesar-Verschlüsselung](https://de.wikipedia.org/wiki/Caesar-Verschl%C3%BCsselung) werden die einzelnen Buchstaben des Klartexts durch Additions eines sogenannten _Rotationswerts_ "verschoben" und dadurch verschlüsselt. Bei der einfachen Caesar-Verschlüsselung ist der Rotationswert für jeden Buchstaben des zu verschlüsselnden Textes gleich. Die hier zu implementierende Caesar-Variante ist etwas anspruchsvoller gestaltet, da jeder Buchstabe um einen anderen Wert verschoben werden kann.
 
-Als Rotationswert wird bei dieser Version des Caesar-Ciphers immer das nächsthöhere Byte von `key_` verwendet und modulo 26 gerechnet. Angenommen `0102030405060708` ist der `key_`, dann wird im ersten Schritt `01 % 26`, im zweiten Schritt `02 % 26`, u. s. w. als Rotationswert verwendet. Nachdem das letzte Byte verwendet wurde, im Beispiel `08`, soll im nächsten Schritt (also für den nächsten Buchstaben) wieder mit dem höchstwertigen Byte – im Beispiel `01` – fortgefahren werden.
+Als Rotationswert wird bei dieser Version des Caesar-Ciphers immer ein **Byte** von `key_` verwendet und modulo 26 gerechnet. Gestartet wird beim höchstwertigen **Byte**, dann wird das zweithöchstwertige **Byte** verwendet, ..., bis schließlich das niederwertigste **Byte** verwendet wird. Anschließend wird wieder mit dem höchstwertigen fortgefahren. Angenommen `0102030405060708` (**hexadezimal**) ist der `key_`, dann wird im ersten Schritt `01 % 26`, im zweiten Schritt `02 % 26`, u. s. w. als Rotationswert verwendet. Nachdem das letzte **Byte** verwendet wurde, im Beispiel `08`, soll im nächsten Schritt (also für den nächsten Buchstaben) wieder mit dem höchstwertigen **Byte**, im Beispiel `01`, fortgefahren werden.
 
 Der Rotationswert wird also für jeden Buchstaben im Klartext neu bestimmt und zum Buchstaben addiert. (Man spricht von _Rotation nach rechts_.). Sollte der dabei erhaltene Wert größer als `Z` sein, soll wieder am Beginn des Alphabets angefangen werden (siehe Beispiel unten).
 
@@ -204,7 +204,7 @@ Das Entschlüsseln verläuft analog. Der Unterschied zum Verschlüsseln besteht 
 ### Beispiel
 
 ```
-Key: 0102030405060708
+Key: 0102030405060708 (hexadezimal)
 Plaintext: "EASYPEASY"
 Verschlüsseln:
   1. E + 01 % 26 = E + 1 = F
