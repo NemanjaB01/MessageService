@@ -9,6 +9,7 @@ class CaesarCipher : public Cipher
 {
   public:
     CaesarCipher(Key key) : Cipher{key}{}
+    CaesarCipher(){}
     ~CaesarCipher(){}
     CaesarCipher(const CaesarCipher &Cipher) = delete;
     std::string getCipherTypeString() const override;

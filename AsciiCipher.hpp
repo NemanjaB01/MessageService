@@ -11,6 +11,7 @@ class AsciiCipher : public Cipher
 {
   public:
     AsciiCipher(Key key) : Cipher{key}{}
+    AsciiCipher(){}
     ~AsciiCipher(){}
     AsciiCipher(const AsciiCipher &AsciiCipher) = delete;
     std::string getCipherTypeString() const override;

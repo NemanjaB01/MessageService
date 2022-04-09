@@ -65,6 +65,7 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
     return false;
   }
   bool check = false;
+  std::string string;
   for(auto& it : contacts_)
   {
     if(recipient.compare(it.first->getName()) == 0)
@@ -73,7 +74,22 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
       {
         if(iter.first->getName().compare(getName()) == 0)
         {
-         // type = iter.second->getCipherType();
+          check = true;
+          if(it.second->getCipherTypeString() == "ASCII")
+          {
+            AsciiCipher ascii;
+            string = ascii.encrypt(plain_text);
+          }
+          else if(it.second->getCipherTypeString() == "CAESAR")
+          {
+            CaesarCipher caesar;
+            string = caesar.encrypt(plain_text);
+          }
+          else if(it.second->getCipherTypeString() == "NONE")
+          {
+            NoneCipher none;
+            string = none.encrypt(plain_text);
+          }
         }
       }
     }
@@ -84,8 +100,15 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
     return false;
   }
 
+  file<<"Recipient: "<<recipient<<std::endl;
+  file<<"Sender: "<<getName()<<std::endl;
+  file<<string <<std::endl;
+
   file.close();
-  IO::printEncryptedMessage(plain_text);
+
+  std::cout << "\nSending ...\nRecipient: " << recipient << "\nSender: "<< getName() << std::endl;
+  std::cout << string;
+  std::cout<<std::endl;
   return true;
 
 }
@@ -93,12 +116,82 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
 
 bool User::readMessage(const std::string& filename) const
 {
-  /*std::fstream file;
-  file.open("filename", std::ios::out);
+  std::ifstream file;
+  file.open(filename);
+  std::string line;
+  std::string recipient;
+  std::string sender;
+  std::string delimiter = ":";
+  std::string message;
+  int end;
   if(!file.is_open())
   {
     return false;
-  }*/
+  }
+  int counter = 0;
+  while(std::getline(file,line))
+  {
+    if(counter == 0)
+    {
+      end = line.find(delimiter);
+      line.erase(0,end + 2);
+      recipient = line;
+      counter++;
+      if(recipient.compare(getName()) != 0)
+      {
+        return false;
+      }
+    }
+    else if(counter == 1)
+    {
+      end = line.find(delimiter);
+      line.erase(0,end + 2);
+      sender = line;
+      counter++;
+      bool check;
+      for(auto& it : getContacts())
+      {
+        if(sender.compare(it.first->getName()) == 0)
+        {
+          check = true;
+        }
+      }
+      if(!check)
+      {
+        return false;
+      }
+    }
+    else if(counter >= 2)
+    {
+      message = line;
+    }
+  }
+  std::string new_message;
+  for(auto& it : contacts_)
+  {
+    if(sender.compare(it.first->getName()) == 0)
+    {
+      for(auto &iter : it.first->getContacts())
+      {
+        if(iter.second->getCipherTypeString() == "ASCII")
+        {
+          AsciiCipher object;
+          new_message = object.decrypt(message);
+        }
+        else if(iter.second->getCipherTypeString() == "CAESAR")
+        {
+          CaesarCipher object;
+          new_message = object.decrypt(message);
+        }
+        else if(iter.second->getCipherTypeString() == "NONE")
+        {
+          NoneCipher object;
+          new_message = object.decrypt(message);
+        }
+      } 
+    }
+  }
+  IO::printDecryptedMessage(recipient, sender, new_message);
 
   return true;
 }

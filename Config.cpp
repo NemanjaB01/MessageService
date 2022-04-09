@@ -132,7 +132,7 @@ bool Config::saveContacts()
 
 bool Config::parseFile()
 {
-  std::string line;
+  std::string line; 
 
   while(std::getline(file_,line))
   {
