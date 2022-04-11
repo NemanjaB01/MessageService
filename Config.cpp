@@ -145,7 +145,7 @@ bool Config::saveContacts()
     }
     n = 0;
     r++;
-    bool check;
+    bool check = false;
     for(auto& ite : it->getContacts())
     {
       if(it->getName().compare(ite.first->getName()) == 0)
