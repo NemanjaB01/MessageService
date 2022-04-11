@@ -19,6 +19,21 @@ void Config::setConfigModified()
   modified_ = true;
 }
 
+void Config::deleteAll()
+{
+  for(auto& it : users_)
+  {
+    for(auto& iter : it->getContacts())
+    {
+      delete(iter.second);
+    }
+  }
+  for(auto &it :users_)
+  {
+    delete it;
+  }
+}
+
 
 bool Config::saveContacts()
 {
@@ -122,17 +137,7 @@ bool Config::saveContacts()
       {
         if(it->getName().compare(iter->getName()) == 0)
         {
-          for(auto& it : users_)
-          {
-            for(auto& iter : it->getContacts())
-            {
-              delete(iter.second);
-            }
-          }
-          for(auto &it :users_)
-          {
-            delete it;
-          }
+          deleteAll();
           return false;
         }
       }
@@ -140,23 +145,28 @@ bool Config::saveContacts()
     }
     n = 0;
     r++;
+    bool check;
     for(auto& ite : it->getContacts())
     {
       if(it->getName().compare(ite.first->getName()) == 0)
       {
-        for(auto& it : users_)
-        {
-          for(auto& iter : it->getContacts())
-          {
-            delete(iter.second);
-          }
-        }
-        for(auto &it :users_)
-        {
-          delete it;
-        }
+        deleteAll();
         return false;
       }
+      for(auto& iter : ite.first->getContacts())
+      {
+        if(iter.first->getName().compare(it->getName()) == 0)
+        {
+          check = true;
+        }
+      }
+      if(!check)
+      {
+        deleteAll();
+        return false;
+      }
+
+
     }
   }
 
@@ -251,6 +261,7 @@ User* Config::getUser(const std::string& name) const
       return it;
     }
   }
+
   return nullptr;
 
 }
@@ -278,6 +289,7 @@ User* Config::loginUser(const std::string& name, const std::string& password) co
       }
     }
   }
+
   return nullptr;
 }
 
@@ -314,17 +326,7 @@ bool Config::updateConfigFile()
     modified_ = false;
     return true;
   }
-  for(auto& it : users_)
-  {
-    for(auto& iter : it->getContacts())
-    {
-      delete(iter.second);
-    }
-  }
-  for(auto &it :users_)
-  {
-    delete it;
-  }
+  deleteAll();
 
   return true;
 }

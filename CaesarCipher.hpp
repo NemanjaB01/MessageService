@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Cipher.hpp"
 #include <string>
+#include "Utils.hpp"
 
 class CaesarCipher : public Cipher
 {

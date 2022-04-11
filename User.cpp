@@ -29,6 +29,12 @@ bool User::hasContact(const std::string& name) const
       return true;
     }
   }
+
+  for(auto& iter : getContacts())
+  {
+    delete(iter.second);
+  }
+
   return false;
 }
 
@@ -139,6 +145,7 @@ bool User::readMessage(const std::string& filename) const
       counter++;
       if(recipient.compare(getName()) != 0)
       {
+        file.close();
         return false;
       }
     }
@@ -158,6 +165,7 @@ bool User::readMessage(const std::string& filename) const
       }
       if(!check)
       {
+        file.close();
         return false;
       }
     }
@@ -167,6 +175,7 @@ bool User::readMessage(const std::string& filename) const
     }
   }
   std::string new_message;
+
   for(auto& it : contacts_)
   {
     if(sender.compare(it.first->getName()) == 0)
@@ -190,6 +199,7 @@ bool User::readMessage(const std::string& filename) const
   }
 
   IO::printDecryptedMessage(recipient, sender, new_message);
+  file.close();
 
   return true;
 }

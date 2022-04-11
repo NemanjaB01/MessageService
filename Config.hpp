@@ -26,6 +26,7 @@ class Config
     void setConfigModified();
     bool saveContacts();
     bool parseFile();
+    void deleteAll();
     bool containsUser(const std::string& name) const;
     User* getUser(const std::string& name) const;
     User* registerUser(const std::string& name, const std::string& password);
