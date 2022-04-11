@@ -66,14 +66,21 @@ bool Config::saveContacts()
 
         if(contact_password.length() != 16)
         {
+          for(auto &it :users_)
+          {
+            delete it;
+          }
           return false;
         }
         if(!(std::all_of(contact_password.begin(),contact_password.end(), ::isxdigit)))
         {
+          for(auto &it :users_)
+          {
+            delete it;
+          }
           return false;
         }
         Key key = std::stoul(contact_password, nullptr ,16);
-        Cipher* contact_cipher = nullptr;
         CipherType type;
         if(cipher_type.compare("ASCII") == 0)
         {
@@ -89,6 +96,10 @@ bool Config::saveContacts()
         }
         else
         {
+          for(auto &it :users_)
+          {
+            delete it;
+          }
           return false;
         }
 
@@ -101,7 +112,8 @@ bool Config::saveContacts()
     row++;
 
   }
-  int r,n = 0;
+  int r = 0;
+  int n = 0;
   for(auto& it : users_)
   {
     for(auto& iter : users_)
@@ -110,6 +122,17 @@ bool Config::saveContacts()
       {
         if(it->getName().compare(iter->getName()) == 0)
         {
+          for(auto& it : users_)
+          {
+            for(auto& iter : it->getContacts())
+            {
+              delete(iter.second);
+            }
+          }
+          for(auto &it :users_)
+          {
+            delete it;
+          }
           return false;
         }
       }
@@ -121,6 +144,17 @@ bool Config::saveContacts()
     {
       if(it->getName().compare(ite.first->getName()) == 0)
       {
+        for(auto& it : users_)
+        {
+          for(auto& iter : it->getContacts())
+          {
+            delete(iter.second);
+          }
+        }
+        for(auto &it :users_)
+        {
+          delete it;
+        }
         return false;
       }
     }
@@ -152,6 +186,10 @@ bool Config::parseFile()
         {
           if((c < 65 || c > 90)&&(c < 97 || c > 122) && (c < 48 || c > 57))
           {
+            for(auto &it :users_)
+            {
+              delete it;
+            }
             return false;
           }
         } 
@@ -166,6 +204,10 @@ bool Config::parseFile()
         {
           if((c < 65 || c > 90)&&(c < 97 || c > 122) && (c < 48 || c > 57))
           {
+            for(auto &it :users_)
+            {
+              delete it;
+            }
             return false;
           }
         }
@@ -276,7 +318,6 @@ bool Config::updateConfigFile()
   {
     for(auto& iter : it->getContacts())
     {
-      delete(iter.first);
       delete(iter.second);
     }
   }
