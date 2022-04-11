@@ -153,9 +153,9 @@ bool Config::saveContacts()
         deleteAll();
         return false;
       }
-      for(auto& iter : ite.first->getContacts())
+      for(auto& iterator : ite.first->getContacts())
       {
-        if(iter.first->getName().compare(it->getName()) == 0)
+        if(iterator.first->getName().compare(it->getName()) == 0)
         {
           check = true;
         }
