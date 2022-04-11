@@ -36,7 +36,7 @@ std::string CaesarCipher::decrypt(const std::string& cipher_text)
   Key key = Cipher::getKey();
   std::string plain_text;
 
-   int counter = 7;
+  int counter = 7;
   for(int n = 0; cipher_text[n] != '\0';n++)
   {
     int chr = cipher_text[n];

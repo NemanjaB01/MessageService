@@ -33,7 +33,7 @@ std::string AsciiCipher::decrypt(const std::string& cipher_text)
   key %= 10;
   char result = 0;
   bool return_type = true;
-  
+
   while(true)
   {
     return_type = Utils::decimalStringToInt(new_string,result);

@@ -272,5 +272,18 @@ bool Config::updateConfigFile()
     modified_ = false;
     return true;
   }
+  for(auto& it : users_)
+  {
+    for(auto& iter : it->getContacts())
+    {
+      delete(iter.first);
+      delete(iter.second);
+    }
+  }
+  for(auto &it :users_)
+  {
+    delete it;
+  }
+
   return true;
 }

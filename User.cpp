@@ -171,26 +171,24 @@ bool User::readMessage(const std::string& filename) const
   {
     if(sender.compare(it.first->getName()) == 0)
     {
-      for(auto &iter : it.first->getContacts())
+      if(it.second->getCipherTypeString() == "ASCII")
       {
-        if(iter.second->getCipherTypeString() == "ASCII")
-        {
-          AsciiCipher object;
-          new_message = object.decrypt(message);
-        }
-        else if(iter.second->getCipherTypeString() == "CAESAR")
-        {
-          CaesarCipher object;
-          new_message = object.decrypt(message);
-        }
-        else if(iter.second->getCipherTypeString() == "NONE")
-        {
-          NoneCipher object;
-          new_message = object.decrypt(message);
-        }
-      } 
+        AsciiCipher ascii;
+        new_message = ascii.decrypt(message);
+      }
+      else if(it.second->getCipherTypeString() == "CAESAR")
+      {
+        CaesarCipher caesar;
+        new_message = caesar.decrypt(message);
+      }
+      else if(it.second->getCipherTypeString() == "NONE")
+      {
+        NoneCipher none;
+        new_message = none.decrypt(message);
+      }
     }
   }
+
   IO::printDecryptedMessage(recipient, sender, new_message);
 
   return true;
