@@ -51,7 +51,7 @@ bool Config::saveContacts()
     int end;
     counter_line = 0;
 
-    while((end = line.find(delimiter)) != std::string::npos)
+    while((end = line.find(delimiter)) != -1)
     {
       if(counter_line == 0)
       {

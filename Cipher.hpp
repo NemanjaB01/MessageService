@@ -17,7 +17,6 @@ class Cipher
   public:
     Cipher(Key key) : key_{key} {}
     Cipher(const std::string& plain_text);
-    Cipher(Key key, CipherType type) : key_{key}{}
     Cipher() = default;
     Key getKey();
     std::string preparePlainText(const std::string& plain_text) const;
