@@ -324,6 +324,7 @@ bool Config::updateConfigFile()
     file.close();
 
     modified_ = false;
+    deleteAll();
     return true;
   }
   deleteAll();
