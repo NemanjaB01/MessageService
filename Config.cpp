@@ -165,7 +165,6 @@ bool Config::saveContacts()
         deleteAll();
         return false;
       }
-      check = false;
 
     }
   }
@@ -314,9 +313,13 @@ bool Config::updateConfigFile()
         {
           file<<result<<";";
         }
-        else
+        else if(result.length() == 15)
         {
           file<<"0"<<result<<";";
+        }
+        else
+        {
+          file<<"00"<<result<<";";
         }
       }
       file<<std::endl;
