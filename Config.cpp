@@ -146,6 +146,7 @@ bool Config::saveContacts()
     n = 0;
     r++;
     bool check = false;
+
     for(auto& ite : it->getContacts())
     {
       if(it->getName().compare(ite.first->getName()) == 0)
@@ -165,7 +166,26 @@ bool Config::saveContacts()
         deleteAll();
         return false;
       }
-
+    }
+  }
+  for(auto &first : users_)
+  {
+    for(auto& iter : first->getContacts())
+    {
+      for(auto& second : users_)
+      {
+        for(auto& it : second->getContacts())
+        {
+          if(iter.first->getName().compare(it.first->getName()) == 0)
+          {
+            if((iter.second->getKey() != it.second->getKey()) && (iter.second->getCipherTypeString() != iter.second->getCipherTypeString()))
+            {
+              deleteAll();
+              return false;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -175,7 +195,7 @@ bool Config::saveContacts()
 
 bool Config::parseFile()
 {
-  std::string line; 
+  std::string line;
 
   while(std::getline(file_,line))
   {
