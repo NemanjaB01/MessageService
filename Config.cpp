@@ -313,13 +313,9 @@ bool Config::updateConfigFile()
         {
           file<<result<<";";
         }
-        else if(result.length() == 15)
-        {
-          file<<"0"<<result<<";";
-        }
         else
         {
-          file<<"00"<<result<<";";
+          file<<"0"<<result<<";";
         }
       }
       file<<std::endl;

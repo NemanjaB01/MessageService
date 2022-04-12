@@ -156,12 +156,13 @@ bool User::readMessage(const std::string& filename) const
       line.erase(0,end + 2);
       sender = line;
       counter++;
-      bool check;
+      bool check = false;
       for(auto& it : getContacts())
       {
         if(sender.compare(it.first->getName()) == 0)
         {
           check = true;
+          break;
         }
       }
       if(!check)
