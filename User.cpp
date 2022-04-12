@@ -1,14 +1,17 @@
 #include "User.hpp"
 
+
 std::string User::getName() const
 {
   return name_;
 }
 
+
 std::string User::getPassword() const
 {
   return password_;
 }
+
 
 bool User::verifyPassword(const std::string& password) const
 {
@@ -18,6 +21,7 @@ bool User::verifyPassword(const std::string& password) const
   }
   return false;
 }
+
 
 bool User::hasContact(const std::string& name) const
 {
@@ -30,11 +34,6 @@ bool User::hasContact(const std::string& name) const
     }
   }
 
-  for(auto& iter : getContacts())
-  {
-    delete(iter.second);
-  }
-
   return false;
 }
 
@@ -45,17 +44,17 @@ void User::addContact(User* contact, CipherType type, Key key)
   if(type == CipherType::ASCII_CIPHER)
   {
     pointer_base_class = new AsciiCipher(key);;
-    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class) );
+    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class));
   }
   else if(type == CipherType::CAESAR_CIPHER)
   {
     pointer_base_class = new CaesarCipher(key);
-    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class) );
+    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class));
   }
   else if(type == CipherType::NONE_CIPHER)
   {
     pointer_base_class = new NoneCipher(key);
-    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class) );
+    contacts_.insert( std::pair<User*,Cipher*>(contact, pointer_base_class));
   }
 
 }
@@ -65,13 +64,14 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
 {
   std::ofstream file;
   file.open(filename);
-   CipherType type;
+
   if(!file.is_open())
   {
     return false;
   }
   bool check = false;
   std::string string;
+  Key key;
   for(auto& it : contacts_)
   {
     if(recipient.compare(it.first->getName()) == 0)
@@ -81,19 +81,20 @@ bool User::sendMessage(const std::string& recipient, const std::string& filename
         if(iter.first->getName().compare(getName()) == 0)
         {
           check = true;
+          key = it.second->getKey();
           if(it.second->getCipherTypeString() == "ASCII")
           {
-            AsciiCipher ascii;
+            AsciiCipher ascii(key);
             string = ascii.encrypt(plain_text);
           }
           else if(it.second->getCipherTypeString() == "CAESAR")
           {
-            CaesarCipher caesar;
+            CaesarCipher caesar(key);
             string = caesar.encrypt(plain_text);
           }
           else if(it.second->getCipherTypeString() == "NONE")
           {
-            NoneCipher none;
+            NoneCipher none(key);
             string = none.encrypt(plain_text);
           }
         }
@@ -175,24 +176,25 @@ bool User::readMessage(const std::string& filename) const
     }
   }
   std::string new_message;
-
+  Key key;
   for(auto& it : contacts_)
   {
     if(sender.compare(it.first->getName()) == 0)
     {
+      key = it.second->getKey();
       if(it.second->getCipherTypeString() == "ASCII")
       {
-        AsciiCipher ascii;
+        AsciiCipher ascii(key);
         new_message = ascii.decrypt(message);
       }
       else if(it.second->getCipherTypeString() == "CAESAR")
       {
-        CaesarCipher caesar;
+        CaesarCipher caesar(key);
         new_message = caesar.decrypt(message);
       }
       else if(it.second->getCipherTypeString() == "NONE")
       {
-        NoneCipher none;
+        NoneCipher none(key);
         new_message = none.decrypt(message);
       }
     }
