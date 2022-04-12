@@ -168,20 +168,24 @@ bool Config::saveContacts()
       }
     }
   }
+
   for(auto &first : users_)
   {
     for(auto& iter : first->getContacts())
     {
       for(auto& second : users_)
       {
-        for(auto& it : second->getContacts())
+        if(iter.first->getName().compare(second->getName()) == 0)
         {
-          if(iter.first->getName().compare(it.first->getName()) == 0)
+          for(auto& it : second->getContacts())
           {
-            if((iter.second->getKey() != it.second->getKey()) && (iter.second->getCipherTypeString() != iter.second->getCipherTypeString()))
+            if((it.first->getName().compare(first->getName())== 0))
             {
-              deleteAll();
-              return false;
+              if((it.second->getCipherTypeString() != iter.second->getCipherTypeString()) || (it.second->getKey() != iter.second->getKey()))
+              {
+                deleteAll();
+                return false;
+              }
             }
           }
         }
