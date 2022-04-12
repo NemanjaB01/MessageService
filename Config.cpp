@@ -165,7 +165,7 @@ bool Config::saveContacts()
         deleteAll();
         return false;
       }
-
+      check = false;
 
     }
   }
