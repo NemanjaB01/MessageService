@@ -212,6 +212,11 @@ bool Config::saveContacts()
         }
       }
     }
+  }
+  if(users_.empty() == true)
+  {
+    return false;
+  }
 
   return true;
 }
@@ -283,10 +288,6 @@ bool Config::parseFile()
   }
 
   if(!saveContacts())
-  {
-    return false;
-  }
-  if(users_.empty() == true)
   {
     return false;
   }
