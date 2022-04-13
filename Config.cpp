@@ -283,7 +283,7 @@ bool Config::parseFile()
     }
   }
 
-  if(!saveContacts())
+  if(!saveContacts() || users_.empty())
   {
     return false;
   }
