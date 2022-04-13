@@ -159,9 +159,22 @@ bool Config::saveContacts()
     n = 0;
     r++;
     bool check = false;
+    bool check2 = false;
 
     for(auto& ite : it->getContacts())
     {
+      for(auto& contain_user : users_)
+      {
+        if(ite.first->getName().compare(contain_user->getName()) == 0)
+        {
+          check2 = true;
+        }
+      } 
+      if(check2 == false)
+      {
+        deleteAll();
+        return false;
+      }
       counter_contact = 0;
       if(it->getName().compare(ite.first->getName()) == 0)
       {
