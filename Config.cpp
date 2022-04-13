@@ -150,6 +150,7 @@ bool Config::saveContacts()
 
     for(auto& ite : it->getContacts())
     {
+      counter_contact = 0;
       if(it->getName().compare(ite.first->getName()) == 0)
       {
         deleteAll();
@@ -174,7 +175,6 @@ bool Config::saveContacts()
         deleteAll();
         return false;
       }
-      counter_contact = 0;
     }
   }
 
@@ -236,6 +236,10 @@ bool Config::parseFile()
           }
         } 
         user_name = parse_string;
+        if(user_name.empty() == true)
+        {
+          return false;
+        }
         line.erase(0, end + delimiter.length());
         counter++;
         continue;
@@ -254,6 +258,10 @@ bool Config::parseFile()
           }
         }
         user_passweord = parse_string;
+        if(user_passweord.empty() == true)
+        {
+          return false;
+        }
         line.erase(0, end + delimiter.length());
       }
       User* user = new User(user_name,user_passweord);
