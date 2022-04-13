@@ -181,7 +181,7 @@ bool Config::saveContacts()
           {
             if((it.first->getName().compare(first->getName())== 0))
             {
-              if((it.second->getCipherTypeString() != iter.second->getCipherTypeString()) || (it.second->getKey() != iter.second->getKey()))
+              if(((it.second->getCipherTypeString()) != (iter.second->getCipherTypeString())) || ((it.second->getKey()) != (iter.second->getKey())))
               {
                 deleteAll();
                 return false;
