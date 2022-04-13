@@ -129,6 +129,7 @@ bool Config::saveContacts()
   }
   int r = 0;
   int n = 0;
+  int counter_contact = 0;
   for(auto& it : users_)
   {
     for(auto& iter : users_)
@@ -161,11 +162,19 @@ bool Config::saveContacts()
           check = true;
         }
       }
-      if(!check)
+      for(auto& contact_ite : it ->getContacts())
+      {
+        if(ite.first->getName().compare(contact_ite.first->getName()) == 0)
+        {
+          counter_contact++;
+        }
+      }
+      if(!check || (counter_contact > 1))
       {
         deleteAll();
         return false;
       }
+      counter_contact = 0;
     }
   }
 
@@ -181,7 +190,7 @@ bool Config::saveContacts()
           {
             if((it.first->getName().compare(first->getName())== 0))
             {
-              if(((it.second->getCipherTypeString()) != (iter.second->getCipherTypeString())) || ((it.second->getKey()) != (iter.second->getKey())))
+              if((it.second->getCipherTypeString().compare(iter.second->getCipherTypeString()) != 0) || ((it.second->getKey()) != (iter.second->getKey())))
               {
                 deleteAll();
                 return false;
