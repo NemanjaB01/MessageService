@@ -69,14 +69,26 @@ bool Config::saveContacts()
       {
         end = line.find(":");
         contact_name = line.substr(0, end);
+        if(contact_name.empty()== true)
+        {
+          return false;
+        }
         line.erase(0,end + 1);
 
         end = line.find(",");
         cipher_type = line.substr(0, end);
+        if(cipher_type.empty() == true)
+        {
+          return false;
+        }
         line.erase(0,end + 1);
 
         end = line.find(";");
         contact_password = line.substr(0, end);
+        if(contact_password.empty() == true)
+        {
+          return false;
+        }
         line.erase(0,end + 1);
 
         if(contact_password.length() != 16)
