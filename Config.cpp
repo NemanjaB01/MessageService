@@ -213,10 +213,6 @@ bool Config::saveContacts()
       }
     }
   }
-  if(users_.empty() == true)
-  {
-    return false;
-  }
 
   return true;
 }
