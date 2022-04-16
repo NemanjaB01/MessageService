@@ -1,9 +1,11 @@
 #include "Config.hpp"
 
+
 Config::Config(const std::string& filename) : filename_{filename}, modified_{false}
 {
   file_.open(filename, std::ios::in);
 }
+
 
 bool Config::isOpen() const
 {
@@ -14,10 +16,12 @@ bool Config::isOpen() const
   return false;
 }
 
+
 void Config::setConfigModified()
 {
   modified_ = true;
 }
+
 
 void Config::deleteAll()
 {
@@ -159,22 +163,9 @@ bool Config::saveContacts()
     n = 0;
     r++;
     bool check = false;
-    bool check2 = false;
 
     for(auto& ite : it->getContacts())
     {
-      for(auto& contain_user : users_)
-      {
-        if(ite.first->getName().compare(contain_user->getName()) == 0)
-        {
-          check2 = true;
-        }
-      } 
-      if(check2 == false)
-      {
-        deleteAll();
-        return false;
-      }
       counter_contact = 0;
       if(it->getName().compare(ite.first->getName()) == 0)
       {
