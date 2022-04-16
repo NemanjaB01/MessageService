@@ -237,6 +237,10 @@ bool Config::parseFile()
     while((end = line.find(delimiter)) != std::string::npos)
     {
       parse_string = line.substr(0, end);
+      if(parse_string.empty() == true)
+      {
+        return false;
+      }
 
       if(counter == 0)
       {
@@ -252,10 +256,6 @@ bool Config::parseFile()
           }
         } 
         user_name = parse_string;
-        if(user_name.empty() == true)
-        {
-          return false;
-        }
         line.erase(0, end + delimiter.length());
         counter++;
         continue;
