@@ -16,14 +16,6 @@ std::string AsciiCipher::encrypt(const std::string& plain_text)
   {
     c -= key;
     int i = c;
-     if(i < 65 )
-    {
-      i += 26;
-    }
-    else if(i > 90)
-    {
-      i -= 26;
-    }
     clipertext += std::to_string(i);
     clipertext += ' ';
   }
