@@ -33,9 +33,6 @@ class Config
     User* loginUser(const std::string& name, const std::string& password) const;
     bool updateConfigFile();
 
-
-
-
 };
 
 #endif

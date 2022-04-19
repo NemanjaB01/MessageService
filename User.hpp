@@ -28,7 +28,7 @@ class User
     User(const User &User) = delete;
     std::string getName() const;
     std::string getPassword() const;
-    const auto& getContacts() const{return contacts_;}
+    const auto& getContacts() const {return contacts_;}
     bool verifyPassword(const std::string& password) const;
     bool hasContact(const std::string& name) const;
     void addContact(User* contact, CipherType type, Key key);

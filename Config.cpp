@@ -217,26 +217,7 @@ bool Config::saveContacts()
       }
     }
   }
-  bool check = false;
-  for(auto &it : users_)
-  {
-    for(auto &iter : it->getContacts())
-    {
-      for(auto& ite : users_)
-      {
-        if(iter.first->getName().compare(ite->getName()) == 0)
-        {
-          check = true;
-        }
-      }
-      if(!check )
-      {
-        deleteAll();
-        return false;
-      }
-      check = false;
-    }
-  }
+
 
   return true;
 }
