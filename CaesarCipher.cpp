@@ -53,6 +53,14 @@ std::string CaesarCipher::decrypt(const std::string& cipher_text)
     int num = (key >> (8 * counter)) & 0xff;
     chr = chr - (num % 26);
     char temp_char = chr;
+    if(temp_char < 65 )
+    {
+      temp_char += 26;
+    }
+    else if(temp_char > 90)
+    {
+      temp_char -= 26;
+    }
     plain_text.push_back(temp_char);
     if(counter == 0)
     {
