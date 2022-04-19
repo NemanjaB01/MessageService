@@ -37,14 +37,6 @@ std::string AsciiCipher::decrypt(const std::string& cipher_text)
   while(true)
   {
     return_type = Utils::decimalStringToInt(new_string,result);
-    if(result < 65 )
-    {
-      result += 26;
-    }
-    else if(result > 90)
-    {
-      result -= 26;
-    }
     new_string.erase(0,3);
     text += result;
     if(new_string.length()== 0)
