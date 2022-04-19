@@ -16,6 +16,14 @@ std::string AsciiCipher::encrypt(const std::string& plain_text)
   {
     c -= key;
     int i = c;
+     if(i < 65 )
+    {
+      i += 26;
+    }
+    else if(i > 90)
+    {
+      i -= 26;
+    }
     clipertext += std::to_string(i);
     clipertext += ' ';
   }
@@ -38,6 +46,14 @@ std::string AsciiCipher::decrypt(const std::string& cipher_text)
   {
     return_type = Utils::decimalStringToInt(new_string,result);
     new_string.erase(0,3);
+    if(result < 65 )
+    {
+      result += 26;
+    }
+    else if(result > 90)
+    {
+      result -= 26;
+    }
     text += result;
     if(new_string.length()== 0)
     {
