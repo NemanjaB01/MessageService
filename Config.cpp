@@ -136,6 +136,18 @@ bool Config::saveContacts()
 
         User* user = users_.at(row);
         User* contact_user = getUser(contact_name);
+        bool check = false;
+        for(auto& it : users_)
+        {
+          if(it->getName().compare(contact_user->getName()) == 0)
+          {
+            check = true;
+          }
+        }
+        if(!check)
+        {
+          return false;
+        }
         user->addContact(contact_user,type,key);
 
       }
@@ -217,6 +229,7 @@ bool Config::saveContacts()
       }
     }
   }
+ 
 
 
   return true;
