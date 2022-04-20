@@ -200,7 +200,7 @@ bool Config::saveContacts()
     }
   }
 
-  /*for(auto &first : users_)
+  for(auto &first : users_)
   {
     for(auto& iter : first->getContacts())
     {
@@ -222,8 +222,30 @@ bool Config::saveContacts()
         }
       }
     }
-  }*/
- 
+  }
+  int m = 0;
+  int k = 0;
+  for(auto& it : users_)
+  {
+    m = 0;
+    for(auto& first : it->getContacts())
+    {
+      k = 0;
+      for(auto& second : it->getContacts())
+      {
+        if(k != m)
+        {
+          if((first.first->getName().compare(second.first->getName()) == 0))
+          {
+            deleteAll();
+            return false;
+          }
+        }
+        k++;
+      }
+      m++;
+    }
+  }
 
 
   return true;
