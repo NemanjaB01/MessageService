@@ -200,7 +200,7 @@ bool Config::saveContacts()
     }
   }
 
-  for(auto &first : users_)
+  /*for(auto &first : users_)
   {
     for(auto& iter : first->getContacts())
     {
@@ -222,7 +222,7 @@ bool Config::saveContacts()
         }
       }
     }
-  }
+  }*/
  
 
 
