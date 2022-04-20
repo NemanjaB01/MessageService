@@ -138,10 +138,7 @@ bool Config::saveContacts()
         User* contact_user = getUser(contact_name);
         if(contact_user == nullptr)
         {
-          for(auto &it :users_)
-          {
-            delete it;
-          }
+          deleteAll();
           return false;
         }
 
