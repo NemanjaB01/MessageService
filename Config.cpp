@@ -136,11 +136,13 @@ bool Config::saveContacts()
 
         User* user = users_.at(row);
         User* contact_user = getUser(contact_name);
-        if(contact_user == nullptr)
+        bool check = user->hasContact(contact_name);
+        if(contact_user == nullptr || check == true)
         {
           deleteAll();
           return false;
         }
+
 
         user->addContact(contact_user,type,key);
 
@@ -221,29 +223,6 @@ bool Config::saveContacts()
           }
         }
       }
-    }
-  }
-  int m = 0;
-  int k = 0;
-  for(auto& it : users_)
-  {
-    m = 0;
-    for(auto& first : it->getContacts())
-    {
-      k = 0;
-      for(auto& second : it->getContacts())
-      {
-        if(k != m)
-        {
-          if((first.first->getName().compare(second.first->getName()) == 0))
-          {
-            deleteAll();
-            return false;
-          }
-        }
-        k++;
-      }
-      m++;
     }
   }
 
