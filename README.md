@@ -1,105 +1,104 @@
-# Assignment 1 - Messaging-Dienst
+# Assignment 1 - messaging service
 
-In Assignment 1 (A1) der Konstruktionsübung (KU) soll ein Programm geschrieben werden, mit dem Nachrichten – ähnlich wie bei einem Messaging-Dienst – in verschlüsselter Form zwischen Benutzer:innen ausgetauscht werden können. Als Verschlüsselungsalgorithmen sollen zwei einfache klassische Verfahren (wie beipielsweise eine Version des Caesar-Ciphers) implementiert werden.
-
----
-
-## Lernziele
-
-- Grundlegendes über Klassen
-  - Attribute, Methoden
-  - Konstruktor, Copy-Konstruktor, Destruktor
-- Vererbung
-  - virtuelle Methoden
-  - abstrakte Klassen
-- Strings & Streams (werden am 31.3. in der VO vorgestellt)
-  - `std::string`
-  - Files
-- Datenstrukturen aus der Standard Template Library
-  - bspw. `std::vector` oder `std::map`
+In Assignment 1 (A1) of the construction exercise (KU), a program is to be written with which messages - similar to a messaging service - can be exchanged between users in encrypted form. Two simple classic methods (such as a version of the Caesar cipher) are to be implemented as encryption algorithms.
 
 ---
 
-## Spezifikation
+## Learning goals
 
-- offizielle Ausgabe: 24.3.2022 nach dem VO-Stream
-- Abzugeben bis (Soft-Deadline): 19.4.2022 um 23:59 (in Österreich gültige Zeit)
-- Nachfrist für eine Ausbesserung bis (Hard-Deadline): 23.4.2022 um 23:59 (in Österreich gültige Zeit)
-- Das Framework bestehend aus `main.cpp`, `IO.hpp`, `IO.cpp` sowie `Utils.hpp` und `Utils.cpp` dürfen **NICHT** verändert werden.
-- Es dürfen nur C++ Standard Libraries verwendet werden
-- A1 ist **keine** Gruppenarbeit. Jede:r Student:in erhält vom Lehrveranstaltungs-Team ein eigenes Gitlab-Repository und das Assignment ist **eigenständig** zu
-  bearbeiten. Bitte lies dir dazu unsere [Richtlinien zu Plagiaten](https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiate) genau durch!
-- Die Abgabe muss auf einen eigenen Git-Branch mit dem Namen `submission` erfolgen. Das heißt vor Ablauf der Nachfrist
-  muss die eigene Lösung mittels `git push` in den `submission`-Branch des eigenen Gitlab-Repositorys für A1 gesendet worden sein.
-
----
-
-## Bewertung
-
-**Achtung: Für eine positive Beurteilung in der KU muss mindestens die Hälfte der öffentlichen Testcases bestanden werden.** 
-
-Das Assignment wird, wie im [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=138898) beschrieben, bewertet, allerdings mit zwei Ausnahmen:
-
-1. Beim A1 wird **nur die Funktionalität bewertet**, nicht aber der Coding Standard.
-2. Zum A1 wird es **keine Abgabegespräche** geben.
-
-Auch das Beurteilungsschema der Konstruktionsübung findet sich im [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=256924), insbesondere sei hier noch einmal auf die Regeln zu [Plagiaten](https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiate) verwiesen.
+- Understand classes
+   - Attributes, methods
+   - Constructor, copy constructor, destructor
+- heredity
+   - virtual methods
+   - abstract classes
+- Strings & Streams (will be presented in the VO on March 31)
+   - `std::string`
+   - Files
+- Data structures from the Standard Template Library
+   - e.g. `std::vector` or `std::map`
 
 ---
 
-## Beschreibung
+## specification
 
-### Überblick
-
-In A1 ist ein Programm zu implementieren, in dem Nachrichten – ähnlich wie bei einem Messaging-Dienst – in verschlüsselter Form zwischen Benutzer:innen ausgetauscht werden.
-
-Grundlage des Programms bildet eine Konfigurationsdatei, in der definiert ist, wer für diesen Messaging-Dienst registiert ist und diesen damit auch verwenden kann. Weiters wird in dieser Konfigurationsdatei festgehalten, mit welchen anderen Personen (Kontakten) ein:e Benutzer:in Nachrichten austauschen kann.
-
-Damit nun ein:e Benutzer:in den Messaging-Dienst verwenden kann, muss sich diese:r zu Beginn des Programms einloggen. Falls dies erfolgreich war, ist es für die:den Benutzer:in möglich, Nachrichten an die eigenen Kontakte zu schicken bzw. auch bereits erhaltene Nachrichten zu lesen.
-
-Wichtig ist hierbei, dass alle versendeten Nachrichten verschlüsselt in Textdateien abgespeichert werden, sodass es für andere Benutzer:innen nicht möglich ist, den Inhalt der Nachrichten einfach aus den Textdateien auszulesen. Im Umkehrschluss bedeutet das aber auch, dass erhaltene Nachrichten zuerst entschlüsselt werden müssen, damit diese gelesen werden können.
-
-Anmerkung: Üblicherweise würde man Nachrichten zu einem Server schicken bzw. von diesem empfangen. Um dies in A1 zu vereinfachen, werden abgesendete Nachrichten lediglich in Textdateien abgespeichert.
+- official release: 3/24/2022 after the VO stream
+- To be submitted by (soft deadline): April 19, 2022 at 11:59 p.m. (valid time in Austria)
+- Extension period for a repair until (hard deadline): April 23, 2022 at 11:59 p.m. (valid time in Austria)
+- The framework consisting of `main.cpp`, `IO.hpp`, `IO.cpp` and `Utils.hpp` and `Utils.cpp` may **NOT** be modified.
+- Only C++ standard libraries may be used
+- A1 is **not** group work. Each student receives their own Gitlab repository from the course team and the assignment is **independent**
+   edit. Please read our [Guidelines on Plagiarism](https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiarism) carefully!
+- The submission must be made on a separate git branch called `submission`. That means before the grace period expires
+   your own solution must have been sent to the `submission` branch of your own Gitlab repository for A1 using `git push`.
 
 ---
 
-### Klassen
+## Evaluation
 
-#### Cipher
+**Caution: For a positive assessment in the KU, at least half of the public test cases must be passed.**
 
-Um die Nachrichten verschlüsselt versenden zu können, benötigen wir einen Verschlüsselungsalgorithmus. In diesem Assignment werden Verschlüsselungsalgorithmen durch Klassen repräsentiert. Als Basisklasse für alle Verschlüsselungsalgorithmen soll eine Klasse namens `Cipher` dienen. In den von ihr abgeleiteten Klassen sollen die jeweiligen Verschlüsselungsalgorithmen implementiert werden. Eine detaillierte Beschreibung der Klassen ist unter [description/Cipher.md](description/Cipher.md) zu finden.
+The assignment is evaluated as described in the [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=138898), but with two exceptions:
 
-**Tipp:** Da mehrere konkrete Verschlüsselungsalgorithmen zu implementieren sind, raten wir, zunächst nur den einfachsten zu implementieren (None-Cipher) und sich dann um die in der Folge beschriebenen Klassen `User` und `Config` zu kümmern. Alle Verschlüsselungsalgorithmen können auch mithilfe der [Testoption](#Test) beim Programmstart einfach überprüft werden. 
+1. With the A1 **only the functionality is evaluated**, but not the coding standard.
+2. There will be **no submission talks** for the A1.
 
-#### User & Messages
+The assessment scheme for the construction exercise can also be found in the [TeachCenter](https://tc.tugraz.at/main/mod/page/view.php?id=256924), in particular the rules for [plagiarism]( https://tc.tugraz.at/main/mod/page/view.php?id=256924#Plagiarism).
 
-Benutzer:innen des Messaging-Dienstes können verschlüsselte Nachrichten senden und empfangen und werden in diesem Programm durch die zu schreibende Klasse `User` repräsentiert. Eine detaillierte Beschreibung dieser Klasse ist unter [description/User_Messages.md](description/User_Messages.md) zu finden.
+---
+
+## Description
+
+### Overview
+
+In A1, a program is to be implemented in which messages - similar to a messaging service - are exchanged between users in encrypted form.
+
+The program is based on a configuration file that defines who is registered for this messaging service and can therefore also use it. This configuration file also records which other people (contacts) a user can exchange messages with.
+
+In order for a user to be able to use the messaging service, he must log in at the beginning of the program. If this was successful, it is possible for the user to send messages to their own contacts or to read messages that have already been received.
+
+It is important here that all sent messages are stored in encrypted form in text files so that it is not possible for other users to simply read the content of the messages from the text files. Conversely, this also means that received messages must first be decrypted so that they can be read.
+
+Note: Normally you would send messages to and receive messages from a server. To simplify this in A1, sent messages are only saved in text files.
+---
+
+### classes
+
+#### cipher
+
+In order to be able to send encrypted messages, we need an encryption algorithm. In this assignment, encryption algorithms are represented by classes. A class called `Cipher` should serve as the base class for all encryption algorithms. The respective encryption algorithms are to be implemented in the classes derived from it. A detailed description of the classes can be found under [description/Cipher.md](description/Cipher.md).
+
+**Tip:** As there are several specific encryption algorithms to be implemented, we recommend implementing the simplest one first (None-Cipher) and then taking care of the `User` and `Config` classes described below. All encryption algorithms can also be easily checked using the [Test option](#Test) at program startup.
+
+#### Users & Messages
+
+Users of the messaging service can send and receive encrypted messages and are represented in this program by the class `User` to be written. A detailed description of this class can be found at [description/User_Messages.md](description/User_Messages.md).
 
 #### Config
 
-Sind die oben genannten Klassen implementiert, kann mit dem Einlesen der Konfigurationsdatei begonnen werden. Eine detaillierte Beschreibung über den Aufbau der Konfigurationsdatei ist unter [description/Config.md](description/Config.md) zu finden. In dieser Datei wird auch beschrieben, wie die entsprechende Klasse namens `Config` aussehen soll.
+Once the above classes have been implemented, the configuration file can be read in. A detailed description of the structure of the configuration file can be found under [description/Config.md](description/Config.md). This file also describes what the corresponding class called `Config` should look like.
 
 
 
 ---
 
-### Programmstart
+### Program start
 
-**ACHTUNG: Die Datei `main.cpp` darf NICHT veändert werden!**
+**ATTENTION: The file `main.cpp` must NOT be changed!**
 
-In der Datei `main.cpp` ist der Programmstart bereits gegeben. Das Programm erhält beim Aufruf den Pfad zur Konfigurationsdatei als Parameter. Danach wird ein Objekt der Klasse `Config` (zu implementieren) erstellt, das File überprüft und versucht, die Konfigurationsdatei zu parsen (einlesen der Benutzer:innen und ihrer Kontakte).
+The program start is already given in the file `main.cpp`. When called, the program receives the path to the configuration file as a parameter. After that, an object of class `Config` (to be implemented) is created, the file is checked and an attempt is made to parse the configuration file (reading in the users and their contacts).
 
-War das Einlesen der Konfigurationsdatei erfolgreich, kann die:der Benutzer:in zwischen den  Optionen _Registrierung_, _Login_ und _Test_  wählen.
+If the configuration file was read in successfully, the user can choose between the options _Registration_, _Login_ and _Test_.
 
-### Registrierung
+### Registration
 
-> bereits implementiert in main.cpp
+> already implemented in main.cpp
 
-Wird bei der ersten Eingabe die Registrierung gewählt, dann wird die Funktion `userRegistration` aufgerufen und es müssen Benutzername und Passwort eingeben werden. Beim Benutzernamen wird überprüft, ob die:der Benutzer:in bereits in der Konfigurationsdatei vorhanden ist. Wenn nicht, dann soll die:der Benutzer:in mit dem Funktionsaufruf `config.registerUser(username, password)` registriert werden. Diese Funktion ist u. a. in der `Config`-Klasse zu implementieren.
+If registration is selected for the first entry, the `userRegistration` function is called and user name and password must be entered. The user name is checked to see whether die:der User:in already exists in the configuration file. If not, then the:the user:in should be registered with the function call `config.registerUser(username, password)`. This function is e.g. to be implemented in the `Config` class.
 
-Der Rückgabewert der Funktion `userRegistration` in der Datei `main.cpp` soll ein Pointer auf das `User`-Objekt sein, das die:den neu registrierte:n Benutzer:in repräsentiert.
+The return value of the `userRegistration` function in the `main.cpp` file should be a pointer to the `User` object representing the newly registered user.
 
-#### Beispiel
+#### Example
 
 ```
 Welcome to the OOP1 Messaging Service!
@@ -117,13 +116,13 @@ Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
 
 
 
-### Login
+### Log in
 
-> bereits implementiert in main.cpp
+> already implemented in main.cpp
 
-Wird bei der ersten Eingabe der Login gewählt, dann wird die Funktion `userLogin` aufgerufen und es muss zunächst der Benutzername eingeben werden. Es wird in der Konfigurationsdatei überprüft, ob dieser Name vorhanden ist. Wenn dies der Fall ist, hat die:der Benutzer:in drei Mal die Möglichkeit, das richtige Passwort einzugeben. Hierfür wird die Funktion `config.loginUser(username, password)` aufgerufen, welche zu implementieren ist. Diese gibt einen Pointer auf das entsprechende `User`-Objekt zurück, wenn der Login erfolgreich war und `nullptr`, wenn das Passwort nicht mit jenem in der Konfigurationsdatei übereinstimmt. (`nullptr` ist das C++ Äquivalent zu `NULL`.)
+If the login is selected for the first entry, the `userLogin` function is called and the user name must first be entered. The configuration file is checked to see whether this name exists. If this is the case, the:the user:in has three chances to enter the correct password. For this, the function `config.loginUser(username, password)` is called, which has to be implemented. This returns a pointer to the corresponding `User` object if the login was successful and `nullptr` if the password does not match the one in the configuration file. (`nullptr` is the C++ equivalent of `NULL`.)
 
-Der Rückgabewert der Funktion `userLogin` in der Datei `main.cpp` soll der neu angelegte und eingeloggte User sein oder `nullptr` wenn der Login nicht erfolgreich war.
+The return value of the `userLogin` function in the `main.cpp` file should be the newly created and logged in user or `nullptr` if the login was unsuccessful.
 
 ```
 Welcome to the OOP1 Messaging Service!
@@ -141,58 +140,58 @@ Choose your option: [a]dd contact, [e]ncrypt, [d]ecrypt, [s]how or [q]uit
 
 
 
-### Test
+### Trial
 
-> bereits implementiert in main.cpp
+> already implemented in main.cpp
 
-Wird bei der ersten Eingabe Test ausgewählt, erfolgt kein Zugang zum Messaging Dienst. Diese Option dient lediglich dazu, die zu implementierenden Verschlüsselungsalgorithmen ohne die Notwendigkeit anderer Klassen testen zu können. 
+If test is selected the first time you enter, the messaging service will not be accessed. This option is only used to test the encryption algorithms to be implemented without the need for other classes.
 
-#### Beispiel
+#### Example
 
 ```
 Welcome to the OOP1 Messaging Service!
 Would you like to [r]egister, [l]ogin or [t]est?
-  > t
+   > t
 What cipher would you like to use?
-  > caesar
+   > caesar
 Enter your message now:
-  > hello world
+   > hello world
 
-Sending ...
+Sending...
 INCKVLLWMM
-Reading ...
+Reading...
 Recipient: SYSTEM
-Sender: SYSTEM
+Transmitter: SYSTEM
 HELLOWORLD
 ```
 
 
 
-### Menü
+### Menu
 
-> bereits implementiert in main.cpp
+> already implemented in main.cpp
 
-War die Registrierung oder der Login erfolgreich, kommt die:der Benutzer:in ins Hauptmenü. Auch dieses ist bereits fertig implementiert. Eine detaillierte Beschreibung des Menüs ist unter [description/Menu.md](description/Menu.md) zu finden.
-
-
-
-### Programmende
-
-Dieser Teil ist bereits implementiert. Es ist jedoch noch zu implementieren, wann eine Konfigurationsdatei ungültig ist. 
-
-| Rückgabewert | Beschreibung                                                 |
-| ------------ | ------------------------------------------------------------ |
-| 0            | Normales Programmende                                        |
-| 1            | Speicher konnte nicht alloziert werden. Fehlermeldung: `Error: not enough memory!\n` |
-| 2            | Falsche Anzahl an Programmargumenten. Fehlermeldung: `Usage: ./a1 <configfile>\n` |
-| 3            | Konfigurationsdatei konnte nicht geöffnet werden. Fehlermeldung: `Error: could not open config file!\n` |
-| 4            | Ungültige Konfigurationsdatei. Fehlermeldung: `Error: invalid config file!\n` |
-| 5            | Login nicht erfolgreich nach drei fehlgeschlagenen Versuchen    |
+If the registration or the login was successful, the:the user:in comes to the main menu. This is also already fully implemented. A detailed description of the menu can be found under [description/Menu.md](description/Menu.md).
 
 
 
+### End of program
+
+This part is already implemented. However, it is yet to be implemented when a configuration file is invalid.
+
+| return value | Description |
+| ------------ | -------------------------------------------------- ---------- |
+| 0 | Normal end of program |
+| 1 | Memory could not be allocated. Error message: `Error: not enough memory!\n` |
+| 2 | Incorrect number of program arguments. Error message: `Usage: ./a1 <configfile>\n` |
+| 3 | Configuration file could not be opened. Error message: `Error: could not open config file!\n` |
+| 4 | Invalid configuration file. Error message: `Error: invalid config file!\n` |
+| 5 | Login failed after three failed attempts |
 
 
-## Hinweis
 
-> Ein wichtiger Hinweis noch am Ende: Sämtliche kryptographische Verfahren, die in diesem Beispiel eingesetzt werden, sind keinesfalls sicher und sollten unter keinen Umständen in sicherheitskritischen Anwendungen verwendet werden. Bedingt durch die Konfigurationsdatei sind weiters sämtliche Schlüssel öffentlich einsehbar. Daher können auch alle mit Zugriff auf die Konfigurationsdatei jeden Schlüssel einsehen und damit jede Nachricht entschlüsseln. Bei Interesse über zeitgemäße kryptographische Verfahren, die aber wesentlich komplexer sind als die hier eingesetzten, dürfen wir auf die Lehrveranstaltung "Information Security" verweisen.
+
+
+## A notice
+
+> An important note at the end: All cryptographic methods used in this example are by no means secure and should under no circumstances be used in security-critical applications. Due to the configuration file, all keys can also be viewed publicly. Therefore, anyone with access to the configuration file can see every key and thus decrypt every message. If you are interested in modern cryptographic methods, which are significantly more complex than those used here, we refer you to the "Information Security" course.
